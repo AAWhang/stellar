@@ -6,7 +6,7 @@ export class Ship {
     this.money = money;
     this.parts = 0;
     this.materials = 0;
-    this.weapons = 0;
+    this.ammo = 0;
     this.shield = 0;
     this.crew = [];
     this.food = 100000;
@@ -102,21 +102,24 @@ export class SpaceEvents {
     return die1 * 1000;
   }
 
-  spaceStation(){
+  spaceStation(ship){
     alert("spaceStation");
-  }
-  crewGain(){
+    ship.money += ship.materials * 50;
+    ship.materials = 0;
+    let buyFood = parseInt(prompt("How much food"));
+    let buyParts = parseInt(prompt("How much Parts"));
+    let buyFuel = parseInt(prompt("How much fuel"));
+    let buyAmmo = parseInt(prompt("How much Ammo"));
 
+    let total = (buyFood * 50) + (buyParts * 100) + (buyFuel * 10) + (buyAmmo * 50);
+    ship.fuel += buyFuel;
+    ship.parts += buyParts;
+    ship.food += buyFood;
+    ship.ammo += buyAmmo;
+    ship.money -= total;
+    return ship;
   }
-  foodGain(){
 
-  }
-  fuelGain(){
-
-  }
-  partsGain(){
-
-  }
   ghostStation(ship) {
     let die1 = Math.floor(Math.random() * 2);
     if (die1 === 1) {

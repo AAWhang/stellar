@@ -84,14 +84,13 @@ $(function(){
       whyGod.spaceStation();
     }
 
-    if (gamedist % 65000 === 0) {
+    if (gamedist % 1000 === 0) {
       planetEvents();
     }
   }
 
   function randomSpaceEvents(months) {
     let die1 = Math.floor(Math.random() * 12 + 1);
-    die1 = 3;
     if (months % 4 === 0){
       if (die1 === 3 || die1 === 6 || die1 === 9){
         thingsHappen();
@@ -101,7 +100,6 @@ $(function(){
 
   function thingsHappen(){
     let die1 = Math.floor(Math.random() * 9 + 1);
-    die1 = 9;
     if (die1 === 1){
           alert("gravityWell");
       missionEnvoy.fuel = whyGod.gravityWell(missionEnvoy.fuel);
@@ -116,7 +114,7 @@ $(function(){
     }
     if (die1 === 4){
           alert("spacePirates");
-                    alert("crew member was killed!");
+          alert("crew member was killed!");
       missionEnvoy.hp = whyGod.spacePirates(missionEnvoy.hp,missionEnvoy.crew);
     }
     if (die1 === 5){
@@ -146,7 +144,23 @@ $(function(){
     alert("You have found a " + planetArray[die1].environment() + " planet");
     let choice = prompt("Would you like to explore? y/n?");
     if (choice === "y") {
-      if(planetArray[die1].environment() === "Hospitable")
+      if(planetArray[die1].environment() === "Hospitable") {
+        if (planetArray[die1].lifeforms === "friendly") {
+          missionEnvoy.food += 1000;
+          missionEnvoy.fuel += 3000;
+          missionEnvoy.materials +=  planetArray[die1].materials;
+        } else {
+          for (let i = 0; i < missionEnvoy.crew.length; i++) {
+            missionEnvoy.crew[i].health -= 30;
+          }
+        }
+        missionEnvoy.fuel -= planetArray[die1].gravity;
+        alert("cost to escape planet: " + planetArray[die1].gravity)
+      } else {
+        missionEnvoy.materials +=  planetArray[die1].materials;
+        missionEnvoy.fuel -= planetArray[die1].gravity;
+        alert("cost to escape planet: " + planetArray[die1].gravity)
+      }
 
     } else {
 
@@ -160,4 +174,17 @@ $(function(){
       clearInterval(timer2);
     }
   }
+
+  // function shop(ship){
+  //   let buyFood = parseInt(prompt("How much food"));
+  //   let buyParts = parseInt(prompt("How much Parts"));
+  //   let buyFuel = parseInt(prompt("How much fuel"));
+  //
+  //   let total = (buyFood * 50) + (buyParts * 100) + (buyFuel * 10);
+  //   ship.fuel += buyFuel;
+  //   ship.parts += buyParts;
+  //   ship.food += buyFood;
+  //   ship.money -= total;
+  //   return ship;
+  // }
 });
