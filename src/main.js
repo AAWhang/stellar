@@ -9,7 +9,6 @@ import {Ship,Crew,Planets,SpaceEvents} from "./backend.js";
 
 $(function(){
   let missionEnvoy = new Ship(100,500);
-  let missionColon = new Ship;
   let spacemonths = 0;
   let spaceyears = 0;
   let crew1 = new Crew("male",35,"Snitch");
@@ -37,24 +36,23 @@ $(function(){
 
 
 
-  let timer = setInterval(logM, 700);
+  let timer = setInterval(logM, 1000);
 
         function logM() {
        missionEnvoy.spaceTime += 1;
        spacemonths += 1;
-       missionEnvoy.distance += 1000;
        $("#a0").html(spacemonths);
       $("#b0").html(spaceyears);
        if (spacemonths >= 12) {
          spacemonths= 0;
          spaceyears += 1;
        }
-       spaceHappenings(missionEnvoy.spaceTime,missionEnvoy.distance);
+       randomSpaceEvents(missionEnvoy.spaceTime);
      }
 
      let timer2 = setInterval(logN, 50);
 
-           function logM() {
+           function logN() {
           missionEnvoy.distance += 50;
          $("#c0").html(missionEnvoy.distance);
         spaceHappenings(missionEnvoy.distance);
@@ -77,9 +75,9 @@ $(function(){
       whyGod.spaceStation();
     }
 
-    if (gamedist % 80000 === 0) {
-      planetEvents();
-    }
+    // if (gamedist % 80000 === 0) {
+    //   planetEvents();
+    // }
   }
 
   function randomSpaceEvents(months) {
