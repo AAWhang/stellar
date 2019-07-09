@@ -22,7 +22,7 @@ export class Crew {
       this.gender = gender;
       this.age = age;
       this.occupation = occupation;
-      this.health = 100;
+      this.health = 300;
     }
 }
 
@@ -42,47 +42,41 @@ export class Planets {
       } else {
         this.lifeforms = "none";
         this.trading = "false";
-        return "Inhospitable;"
+        return "Inhospitable";
       }
     };
-    this.materials = Math.floor(Math.random() * 100 + 1);;
-    this.gravity = Math.floor(Math.random() * 5000 + 1);;
+    this.materials = Math.floor(Math.random() * 100 + 1);
+    this.gravity = Math.floor(Math.random() * 5000 + 1);
   }
 }
 
 export class SpaceEvents {
   gravityWell(fuel){
-    alert("gravityWell");
     return fuel - 2000;
   }
 
   astroidBelt(hp){
-    alert("astroidBelt")
     return hp - 200;
   }
 
   meteors(hp){
-    alert("meteors")
     return hp - 200;
   }
 
   spacePirates(hp,crew){
-    alert("spacePirates")
     let death = crew.pop();
-    alert(death.occupation + " was killed!");
     return hp - 100;
   }
 
   spaceVirus(crew){
-    alert("spaceVirus")
     for (let i = 0; i <= crew.length; i++) {
       crew[i].health -= 30;
     }
   }
 
   spaceMadness(crew){
-    alert("spaceMadness")
-    for (let i = 1; i <= crew.length; i++) {
+
+    for (let i = 1; i < crew.length; i++) {
       crew[i].health -= 40;
     }
   }
@@ -92,24 +86,24 @@ export class SpaceEvents {
     let die1 = Math.floor(Math.random() * 6 + 1);
     if (die1 % 2 === 0) {
       alien = "hostile";
-      for (let i = 0; i <= crew.length; i++) {
+      for (let i = 0; i < crew.length; i++) {
         crew[i].health -= 30;
       }
     } else {
       alien = "friendly";
     }
-    alert("you find" + alien + "alien!")
+
 
   }
 
   wormhole(distance){
     let die1 = Math.floor(Math.random() * 600 + 1);
-    alert("wormhole")
+
     return die1 * 1000;
   }
 
   spaceStation(){
-    alert("spaceStation")
+    alert("spaceStation");
   }
   crewGain(){
 
@@ -123,7 +117,46 @@ export class SpaceEvents {
   partsGain(){
 
   }
-  ghostStation(){
+  ghostStation(ship) {
+    let die1 = Math.floor(Math.random() * 2);
+    if (die1 === 1) {
+      ship.fuel += 5000;
+      console.log(ship.fuel);
+    }
+    die1 = Math.floor(Math.random() * 2);
+    if (die1 === 1) {
+      ship.money += 5000;
+      console.log(ship.money);
+    }
+    die1 = Math.floor(Math.random() * 2);
+    if (die1 === 1) {
+      ship.parts += 5000;
+      console.log(ship.parts);
+    }
+    die1 = Math.floor(Math.random() * 2);
+    if (die1 === 1) {
+      ship.materials += 5000;
+      console.log(ship.materials);
+    }
+    die1 = Math.floor(Math.random() * 2);
+    if (die1 === 1) {
+      ship.weapons += 5000;
+      console.log(ship.weapons);
+    }
+    die1 = Math.floor(Math.random() * 2);
+    if (die1 === 1) {
+      ship.food += 5000;
+      console.log(ship.food);
+    }
+    die1 = Math.floor(Math.random() * 2);
+    die1 = 1;
+    if (die1 === 1) {
+      for (let i = 0; i < ship.crew.length; i++) {
+        ship.crew[i].health -= 30;
+        alert(ship.crew[i].health);
+      }
+    }
+
 
   }
 }

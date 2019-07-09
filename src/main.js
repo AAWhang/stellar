@@ -84,7 +84,7 @@ $(function(){
       whyGod.spaceStation();
     }
 
-    if (gamedist % 80000 === 0) {
+    if (gamedist % 65000 === 0) {
       planetEvents();
     }
   }
@@ -101,39 +101,56 @@ $(function(){
 
   function thingsHappen(){
     let die1 = Math.floor(Math.random() * 9 + 1);
-    die1 = 8;
+    die1 = 9;
     if (die1 === 1){
+          alert("gravityWell");
       missionEnvoy.fuel = whyGod.gravityWell(missionEnvoy.fuel);
     }
     if (die1 === 2){
+          alert("astroidBelt");
       missionEnvoy.hp = whyGod.astroidBelt(missionEnvoy.hp);
     }
     if (die1 === 3){
+          alert("meteors");
       missionEnvoy.hp = whyGod.meteors(missionEnvoy.hp);
     }
     if (die1 === 4){
+          alert("spacePirates");
+                    alert("crew member was killed!");
       missionEnvoy.hp = whyGod.spacePirates(missionEnvoy.hp,missionEnvoy.crew);
     }
     if (die1 === 5){
+
+              alert("spaceVirus");
       whyGod.spaceVirus(missionEnvoy.crew);
     }
     if (die1 === 6){
+          alert("spaceMadness");
       whyGod.spaceMadness(missionEnvoy.crew);
     }
     if (die1 === 7){
+          alert("you find alien!");
       whyGod.alienEncounter(missionEnvoy.crew);
     }
     if (die1 === 8){
+          alert("wormhole");
       missionEnvoy.distance = whyGod.wormhole(missionEnvoy.distance);
     }
     if (die1 === 9){
-      whyGod.ghostStation();
+      whyGod.ghostStation(missionEnvoy);
     }
   }
 
   function planetEvents(){
     let die1 = Math.floor(Math.random() * 20 + 1);
     alert("You have found a " + planetArray[die1].environment() + " planet");
+    let choice = prompt("Would you like to explore? y/n?");
+    if (choice === "y") {
+      if(planetArray[die1].environment() === "Hospitable")
+
+    } else {
+
+    }
   }
 
   function gameOverCheck(){
