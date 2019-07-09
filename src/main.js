@@ -11,6 +11,7 @@ $(function(){
   let missionEnvoy = new Ship(100,500);
   let spacemonths = 0;
   let spaceyears = 0;
+  let planetArray = [];
   let crew1 = new Crew("male",35,"Snitch");
   let crew2 = new Crew("male",25,"Pianist");
   let crew3 = new Crew("female",99,"Witch");
@@ -18,6 +19,11 @@ $(function(){
   let whyGod = new SpaceEvents;
   missionEnvoy.crew = [crew1,crew2,crew3,crew4];
   let pause = 1;
+
+
+  for (let p = 0; p <= 20; p++) {
+    planetArray[p] = new Planets();
+    }
 
   $("#d0").click(function(){
     if (pause === 1) {
@@ -75,9 +81,9 @@ $(function(){
       whyGod.spaceStation();
     }
 
-    // if (gamedist % 80000 === 0) {
-    //   planetEvents();
-    // }
+    if (gamedist % 80000 === 0) {
+      planetEvents();
+    }
   }
 
   function randomSpaceEvents(months) {
@@ -120,6 +126,10 @@ $(function(){
     }
   }
 
+  function planetEvents(){
+    let die1 = Math.floor(Math.random() * 20 + 1);
+    alert("You have found a " + planetArray[die1].environment() + " planet");
+  }
 
 
 });

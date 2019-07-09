@@ -27,12 +27,26 @@ export class Crew {
 }
 
 export class Planets {
-  constructor(environment,lifeforms,materials,gravity,trading) {
-    this.environment = environment;
-    this.lifeforms = lifeforms;
-    this.materials = materials;
-    this.gravity = gravity;
-    this.trading = trading;
+  constructor() {
+    this.environment = function(){
+      let die1 = Math.floor(Math.random() * 6 + 1);
+      if (die1 % 2 === 0) {
+        if (die1 === 2) {
+          this.lifeforms = "friendly";
+          this.trading = "true";
+        } else {
+          this.lifeforms = "hostile";
+          this.trading = "false";
+        }
+        return "Hospitable";
+      } else {
+        this.lifeforms = "none";
+        this.trading = "false";
+        return "Inhospitable;"
+      }
+    };
+    this.materials = Math.floor(Math.random() * 100 + 1);;
+    this.gravity = Math.floor(Math.random() * 5000 + 1);;
   }
 }
 
