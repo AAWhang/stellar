@@ -8,7 +8,7 @@ import {Ship,Crew,Planets,SpaceEvents} from "./backend.js";
 
 
 $(function(){
-  let missionEnvoy = new Ship(100,500);
+  let missionEnvoy = new Ship(1000,500);
   let spacemonths = 0;
   let spaceyears = 0;
   let planetArray = [];
@@ -61,7 +61,10 @@ $(function(){
            function logN() {
           missionEnvoy.distance += 50;
          $("#c0").html(missionEnvoy.distance);
+         $("#e0").html("ship hp: " + missionEnvoy.hp + "<br>ship fuel: " + missionEnvoy.fuel);
+
         spaceHappenings(missionEnvoy.distance);
+        gameOverCheck();
         }
 
 
@@ -88,6 +91,7 @@ $(function(){
 
   function randomSpaceEvents(months) {
     let die1 = Math.floor(Math.random() * 12 + 1);
+    die1 = 3;
     if (months % 4 === 0){
       if (die1 === 3 || die1 === 6 || die1 === 9){
         thingsHappen();
@@ -97,29 +101,30 @@ $(function(){
 
   function thingsHappen(){
     let die1 = Math.floor(Math.random() * 9 + 1);
+    die1 = 8;
     if (die1 === 1){
-      whyGod.gravityWell();
+      missionEnvoy.fuel = whyGod.gravityWell(missionEnvoy.fuel);
     }
     if (die1 === 2){
-      whyGod.astroidBelt();
+      missionEnvoy.hp = whyGod.astroidBelt(missionEnvoy.hp);
     }
     if (die1 === 3){
-      whyGod.meteors();
+      missionEnvoy.hp = whyGod.meteors(missionEnvoy.hp);
     }
     if (die1 === 4){
-      whyGod.spacePirates();
+      missionEnvoy.hp = whyGod.spacePirates(missionEnvoy.hp,missionEnvoy.crew);
     }
     if (die1 === 5){
-      whyGod.spaceVirus();
+      whyGod.spaceVirus(missionEnvoy.crew);
     }
     if (die1 === 6){
-      whyGod.spaceMadness();
+      whyGod.spaceMadness(missionEnvoy.crew);
     }
     if (die1 === 7){
-      whyGod.alienEncounter();
+      whyGod.alienEncounter(missionEnvoy.crew);
     }
     if (die1 === 8){
-      whyGod.wormhole();
+      missionEnvoy.distance = whyGod.wormhole(missionEnvoy.distance);
     }
     if (die1 === 9){
       whyGod.ghostStation();
@@ -131,5 +136,11 @@ $(function(){
     alert("You have found a " + planetArray[die1].environment() + " planet");
   }
 
-
+  function gameOverCheck(){
+    if (missionEnvoy.hp <= 0 || missionEnvoy.fuel <= 0 || missionEnvoy.crew.length === 0) {
+      alert("game over!");
+      clearInterval(timer);
+      clearInterval(timer2);
+    }
+  }
 });
