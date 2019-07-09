@@ -11,6 +11,7 @@ $(function(){
   let missionEnvoy = new Ship(100,500);
   let missionColon = new Ship;
   let spacemonths = 0;
+  let spaceyears = 0;
   let crew1 = new Crew("male",35,"Snitch");
   let crew2 = new Crew("male",25,"Pianist");
   let crew3 = new Crew("female",99,"Witch");
@@ -27,8 +28,10 @@ $(function(){
     }
     if (pause === 2) {
       clearInterval(timer);
+      clearInterval(timer2);
     } else {
       timer = setInterval(logM, 700);
+      timer2 = setInterval(logN, 50);
     }
   });
 
@@ -39,29 +42,85 @@ $(function(){
         function logM() {
        missionEnvoy.spaceTime += 1;
        spacemonths += 1;
-       missionColon.distance += 1000;
+       missionEnvoy.distance += 1000;
        $("#a0").html(spacemonths);
-      $("#b0").html(missionColon.spaceTime);
-      $("#c0").html(missionColon.distance);
+      $("#b0").html(spaceyears);
        if (spacemonths >= 12) {
          spacemonths= 0;
-         missionColon.spaceTime += 1;
+         spaceyears += 1;
        }
-       spaceHappenings(missionEnvoy.spaceTime,missionColon.distance);
+       spaceHappenings(missionEnvoy.spaceTime,missionEnvoy.distance);
      }
 
-  function spaceHappenings(gametime,gamedist) {
-    if (gametime === 20){
-      whyGod.gravityWell();
+     let timer2 = setInterval(logN, 50);
+
+           function logM() {
+          missionEnvoy.distance += 50;
+         $("#c0").html(missionEnvoy.distance);
+        spaceHappenings(missionEnvoy.distance);
+        }
+
+
+
+
+  function spaceHappenings(gamedist) {
+    if (gamedist === 120000) {
+      whyGod.spaceStation();
     }
-    if (gamedist === 30000) {
+    if (gamedist === 240000) {
+      whyGod.spaceStation();
+    }
+    if (gamedist === 360000) {
+      whyGod.spaceStation();
+    }
+    if (gamedist === 600000) {
       whyGod.spaceStation();
     }
 
-
+    if (gamedist % 80000 === 0) {
+      planetEvents();
+    }
   }
 
+  function randomSpaceEvents(months) {
+    let die1 = Math.floor(Math.random() * 12 + 1);
+    if (months % 4 === 0){
+      if (die1 === 3 || die1 === 6 || die1 === 9){
+        thingsHappen();
+      }
+    }
+  }
 
+  function thingsHappen(){
+    let die1 = Math.floor(Math.random() * 9 + 1);
+    if (die1 === 1){
+      whyGod.gravityWell();
+    }
+    if (die1 === 2){
+      whyGod.astroidBelt();
+    }
+    if (die1 === 3){
+      whyGod.meteors();
+    }
+    if (die1 === 4){
+      whyGod.spacePirates();
+    }
+    if (die1 === 5){
+      whyGod.spaceVirus();
+    }
+    if (die1 === 6){
+      whyGod.spaceMadness();
+    }
+    if (die1 === 7){
+      whyGod.alienEncounter();
+    }
+    if (die1 === 8){
+      whyGod.wormhole();
+    }
+    if (die1 === 9){
+      whyGod.ghostStation();
+    }
+  }
 
 
 
