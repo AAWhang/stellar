@@ -8,7 +8,7 @@ import {Ship,Crew,Planets,SpaceEvents} from "./backend.js";
 
 
 $(function(){
-  let missionEnvoy = new Ship(1000,500);
+  let missionEnvoy = new Ship(500,500);
   let spacemonths = 0;
   let spaceyears = 0;
   let planetArray = [];
@@ -50,7 +50,7 @@ $(function(){
        $("#a0").html(spacemonths);
       $("#b0").html(spaceyears);
        if (spacemonths >= 12) {
-         spacemonths= 0;
+         spacemonths = 0;
          spaceyears += 1;
        }
        randomSpaceEvents(missionEnvoy.spaceTime);
@@ -100,7 +100,8 @@ $(function(){
   }
 
   function thingsHappen(){
-    let die1 = Math.floor(Math.random() * 9 + 1);
+    let die1 = Math.floor(Math.random() * 10 + 1);
+    die1 = 10;
     if (die1 === 1){
           alert("gravityWell");
       missionEnvoy.fuel = whyGod.gravityWell(missionEnvoy.fuel);
@@ -138,6 +139,9 @@ $(function(){
     if (die1 === 9){
       whyGod.ghostStation(missionEnvoy);
     }
+    if (die1 === 10){
+      whyGod.spaceStation(missionEnvoy);
+    }
   }
 
   function planetEvents(){
@@ -156,15 +160,12 @@ $(function(){
           }
         }
         missionEnvoy.fuel -= planetArray[die1].gravity;
-        alert("cost to escape planet: " + planetArray[die1].gravity)
+        alert("cost to escape planet: " + planetArray[die1].gravity);
       } else {
         missionEnvoy.materials +=  planetArray[die1].materials;
         missionEnvoy.fuel -= planetArray[die1].gravity;
-        alert("cost to escape planet: " + planetArray[die1].gravity)
+        alert("cost to escape planet: " + planetArray[die1].gravity);
       }
-
-    } else {
-
     }
   }
 

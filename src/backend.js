@@ -3,13 +3,15 @@ export class Ship {
   constructor(hp,money){
     this.hp = hp;
     this.fuel = 80000;
+    this.fuelcap = 100000;
     this.money = money;
-    this.parts = 0;
+    this.parts = 20;
     this.materials = 0;
     this.ammo = 0;
     this.shield = 1000;
     this.crew = [];
-    this.food = 100000;
+    this.food = 10000;
+    this.foodcap = 10000;
     this.speed = 0;
     this.distance = 0;
     this.spaceTime = 0;
@@ -64,7 +66,7 @@ export class SpaceEvents {
   }
 
   spacePirates(hp,crew){
-    let death = crew.pop();
+    crew.pop();
     return hp - 100;
   }
 
@@ -92,8 +94,6 @@ export class SpaceEvents {
     } else {
       alien = "friendly";
     }
-
-
   }
 
   wormhole(distance){
@@ -106,16 +106,30 @@ export class SpaceEvents {
     }
   }
 
-  spaceStation(ship){
+  spaceStation(ship) {
     alert("spaceStation");
-    ship.money += ship.materials * 50;
+    ship.money += ship.materials * 100;
     ship.materials = 0;
     let buyFood = parseInt(prompt("How much food"));
     let buyParts = parseInt(prompt("How much Parts"));
     let buyFuel = parseInt(prompt("How much fuel"));
     let buyAmmo = parseInt(prompt("How much Ammo"));
-
     let total = (buyFood * 50) + (buyParts * 100) + (buyFuel * 10) + (buyAmmo * 50);
+    while (total > ship.money || ship.foodcap < ship.food + buyFood || ship.fuelCap < ship.fuel + buyFuel || buyFood === undefined || buyParts === undefined) {
+        alert("Get serious");
+        buyFood = parseInt(prompt("How much food"));
+        buyParts = parseInt(prompt("How much Parts"));
+        buyFuel = parseInt(prompt("How much fuel"));
+        buyAmmo = parseInt(prompt("How much Ammo"));
+        total = (buyFood * 50) + (buyParts * 100) + (buyFuel * 10) + (buyAmmo * 50);
+      }
+    let repaircost = 1000 - ship.hp;
+    let repairReply = prompt("Repairing will take" + repaircost / 100 + " ship parts, proceed?? y/n");
+    if (repairReply === "y") {
+      ship.hp = 1000;
+      ship.parts -= repaircost / 100;
+    }
+
     ship.fuel += buyFuel;
     ship.parts += buyParts;
     ship.food += buyFood;
@@ -123,6 +137,7 @@ export class SpaceEvents {
     ship.money -= total;
     return ship;
   }
+
 
   ghostStation(ship) {
     let choice = prompt("Would you like to explore Ghost Station? y/n?");
