@@ -61,8 +61,17 @@ $(function(){
            function logN() {
           missionEnvoy.distance += 50;
           missionEnvoy.fuel -= 20;
+          missionEnvoy.food -= 5;
          $("#c0").html(missionEnvoy.distance);
-         $("#e0").html("ship hp: " + missionEnvoy.hp + "<br>ship fuel: " + missionEnvoy.fuel);
+         $("#e0").html("ship hp: " + missionEnvoy.hp + "<br>");
+         $("#e0").append("ship fuel: " + missionEnvoy.fuel + "<br>");
+         $("#e0").append("ship food: " + missionEnvoy.food + "<br>");
+         $("#e0").append("ship money: " + missionEnvoy.money + "<br>");
+         $("#e0").append("ship materials: " + missionEnvoy.materials + "<br>");
+         $("#e0").append("ship fuel: " + missionEnvoy.fuel + "<br>");
+         for (let i = 0; i < missionEnvoy.crew.length; i++) {
+           $("#e0").append("crew" + i + "health: " + missionEnvoy.crew[i].health + "<br>");
+         }
 
         spaceHappenings(missionEnvoy.distance);
         gameOverCheck();
@@ -101,7 +110,6 @@ $(function(){
 
   function thingsHappen(){
     let die1 = Math.floor(Math.random() * 10 + 1);
-    die1 = 10;
     if (die1 === 1){
           alert("gravityWell");
       missionEnvoy.fuel = whyGod.gravityWell(missionEnvoy.fuel);
@@ -170,7 +178,7 @@ $(function(){
   }
 
   function gameOverCheck(){
-    if (missionEnvoy.hp <= 0 || missionEnvoy.fuel <= 0 || missionEnvoy.crew.length === 0) {
+    if (missionEnvoy.hp <= 0 || missionEnvoy.fuel <= 0 || missionEnvoy.crew.length === 0 || missionEnvoy.food <= 0) {
       alert("game over!");
       clearInterval(timer);
       clearInterval(timer2);
