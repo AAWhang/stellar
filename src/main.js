@@ -60,6 +60,7 @@ $(function(){
 
            function logN() {
           missionEnvoy.distance += 50;
+          missionEnvoy.fuel -= 20;
          $("#c0").html(missionEnvoy.distance);
          $("#e0").html("ship hp: " + missionEnvoy.hp + "<br>ship fuel: " + missionEnvoy.fuel);
 
@@ -72,19 +73,19 @@ $(function(){
 
   function spaceHappenings(gamedist) {
     if (gamedist === 120000) {
-      whyGod.spaceStation();
+      whyGod.spaceStation(missionEnvoy);
     }
     if (gamedist === 240000) {
-      whyGod.spaceStation();
+      whyGod.spaceStation(missionEnvoy);
     }
     if (gamedist === 360000) {
-      whyGod.spaceStation();
+      whyGod.spaceStation(missionEnvoy);
     }
     if (gamedist === 600000) {
-      whyGod.spaceStation();
+      whyGod.spaceStation(missionEnvoy);
     }
 
-    if (gamedist % 1000 === 0) {
+    if (gamedist % 30000 === 0) {
       planetEvents();
     }
   }

@@ -7,7 +7,7 @@ export class Ship {
     this.parts = 0;
     this.materials = 0;
     this.ammo = 0;
-    this.shield = 0;
+    this.shield = 1000;
     this.crew = [];
     this.food = 100000;
     this.speed = 0;
@@ -97,9 +97,13 @@ export class SpaceEvents {
   }
 
   wormhole(distance){
-    let die1 = Math.floor(Math.random() * 600 + 1);
-
-    return die1 * 1000;
+    let choice = prompt("Wormhole detected, enter? y/n?");
+    if (choice === "y") {
+      let die1 = Math.floor(Math.random() * 600 + 1);
+      return die1 * 1000;
+    } else {
+      return distance;
+    }
   }
 
   spaceStation(ship){
@@ -121,6 +125,8 @@ export class SpaceEvents {
   }
 
   ghostStation(ship) {
+    let choice = prompt("Would you like to explore Ghost Station? y/n?");
+    if (choice === "y") {
     let die1 = Math.floor(Math.random() * 2);
     if (die1 === 1) {
       ship.fuel += 5000;
@@ -159,6 +165,9 @@ export class SpaceEvents {
         alert(ship.crew[i].health);
       }
     }
+  } else {
+    alert("You left the station alone");
+  }
 
 
   }
