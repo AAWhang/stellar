@@ -7,11 +7,11 @@ export class Ship {
     this.money = money;
     this.parts = 20;
     this.materials = 0;
-    this.ammo = 0;
+    this.ammo = 1000;
     this.shield = 1000;
     this.crew = [];
     this.food = 10000;
-    this.foodcap = 10000;
+    this.foodcap = 20000;
     this.speed = 0;
     this.distance = 0;
     this.spaceTime = 0;
@@ -47,7 +47,7 @@ export class Planets {
         return "Inhospitable";
       }
     };
-    this.materials = Math.floor(Math.random() * 100 + 1);
+    this.materials = Math.floor(Math.random() * 10000 + 1);
     this.gravity = Math.floor(Math.random() * 5000 + 1);
   }
 }
@@ -57,21 +57,57 @@ export class SpaceEvents {
     return fuel - 2000;
   }
 
-  astroidBelt(hp){
-    return hp - 200;
+  astroidBelt(ship){
+    let shieldReply = prompt("Use shields? y/n");
+    if (shieldReply === "y" && ship.shield >= 300) {
+      alert("Got past threat!");
+        ship.shield -= 300;
+      }else {
+        alert("Your ship takes damage!");
+        for (let i = 0; i < ship.crew.length; i++) {
+          ship.crew[i].health -= 30;
+        }
+        ship.hp -= 400;
+      }
+    return ship;
   }
 
-  meteors(hp){
-    return hp - 200;
+  meteors(ship){
+    let shieldReply = prompt("Use shields? y/n");
+    if (shieldReply === "y" && ship.shield >= 100) {
+      alert("Got past threat!");
+        ship.shield -= 100;
+      }else {
+        alert("Your ship takes damage!");
+        for (let i = 0; i < ship.crew.length; i++) {
+          ship.crew[i].health -= 30;
+        }
+        ship.hp -= 200;
+      }
+    return ship;
   }
 
-  spacePirates(hp,crew){
-    crew.pop();
-    return hp - 100;
+  spacePirates(ship){
+    let fightReply = prompt("Fight off Space Pirates? y/n");
+    if (fightReply === "y" && ship.ammo >= 40) {
+      alert("Fought off Space Pirates!");
+        ship.ammo -= 40;
+      }else {
+        alert("Space pirates attacked and plundered your ship!");
+        for (let i = 0; i < ship.crew.length; i++) {
+          ship.crew[i].health -= 30;
+        }
+        ship.money = ship.money / 2;
+        ship.materials = ship.materials / 2;
+        ship.food = ship.food / 2;
+        ship.hp -= 100;
+
+      }
+      return ship;
   }
 
   spaceVirus(crew){
-    for (let i = 0; i <= crew.length; i++) {
+    for (let i = 0; i < crew.length; i++) {
       crew[i].health -= 30;
     }
   }
@@ -84,15 +120,15 @@ export class SpaceEvents {
   }
 
   alienEncounter(crew){
-    let alien = "";
+
     let die1 = Math.floor(Math.random() * 6 + 1);
     if (die1 % 2 === 0) {
-      alien = "hostile";
+      alert("alien fucks you up");
       for (let i = 0; i < crew.length; i++) {
         crew[i].health -= 30;
       }
     } else {
-      alien = "friendly";
+      alert("alien says hello!");
     }
   }
 
@@ -114,7 +150,7 @@ export class SpaceEvents {
     let buyParts = parseInt(prompt("How much Parts"));
     let buyFuel = parseInt(prompt("How much fuel"));
     let buyAmmo = parseInt(prompt("How much Ammo"));
-    let total = (buyFood * 50) + (buyParts * 100) + (buyFuel * 10) + (buyAmmo * 50);
+    let total = (buyFood * 10) + (buyParts * 100) + (buyFuel * 10) + (buyAmmo * 50);
     while (total > ship.money || ship.foodcap < ship.food + buyFood || ship.fuelCap < ship.fuel + buyFuel || buyFood === undefined || buyParts === undefined) {
         alert("Get serious");
         buyFood = parseInt(prompt("How much food"));
@@ -129,7 +165,12 @@ export class SpaceEvents {
       ship.hp = 1000;
       ship.parts -= repaircost / 100;
     }
-
+    let healReply = prompt("Heal crew for $1000? y/n");
+    if (healReply === "y") {
+      for (let i = 0; i < ship.crew.length; i++) {
+        ship.crew[i].health = 300;
+      }
+    }
     ship.fuel += buyFuel;
     ship.parts += buyParts;
     ship.food += buyFood;

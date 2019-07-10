@@ -67,6 +67,8 @@ $(function(){
          $("#e0").append("ship fuel: " + missionEnvoy.fuel + "<br>");
          $("#e0").append("ship food: " + missionEnvoy.food + "<br>");
          $("#e0").append("ship money: " + missionEnvoy.money + "<br>");
+         $("#e0").append("ship ammo: " + missionEnvoy.ammo + "<br>");
+         $("#e0").append("ship shield: " + missionEnvoy.shield + "<br>");
          $("#e0").append("ship materials: " + missionEnvoy.materials + "<br>");
          $("#e0").append("ship fuel: " + missionEnvoy.fuel + "<br>");
          for (let i = 0; i < missionEnvoy.crew.length; i++) {
@@ -116,16 +118,15 @@ $(function(){
     }
     if (die1 === 2){
           alert("astroidBelt");
-      missionEnvoy.hp = whyGod.astroidBelt(missionEnvoy.hp);
+      missionEnvoy = whyGod.astroidBelt(missionEnvoy);
     }
     if (die1 === 3){
           alert("meteors");
-      missionEnvoy.hp = whyGod.meteors(missionEnvoy.hp);
+      missionEnvoy = whyGod.meteors(missionEnvoy);
     }
     if (die1 === 4){
           alert("spacePirates");
-          alert("crew member was killed!");
-      missionEnvoy.hp = whyGod.spacePirates(missionEnvoy.hp,missionEnvoy.crew);
+      missionEnvoy = whyGod.spacePirates(missionEnvoy);
     }
     if (die1 === 5){
 
@@ -159,12 +160,24 @@ $(function(){
     if (choice === "y") {
       if(planetArray[die1].environment() === "Hospitable") {
         if (planetArray[die1].lifeforms === "friendly") {
-          missionEnvoy.food += 1000;
+          alert("You found friendly aliens!");
+          missionEnvoy.food += 2000;
           missionEnvoy.fuel += 3000;
           missionEnvoy.materials +=  planetArray[die1].materials;
         } else {
-          for (let i = 0; i < missionEnvoy.crew.length; i++) {
-            missionEnvoy.crew[i].health -= 30;
+          alert("You find hostile aliens! They attack!");
+          let fightReply = prompt("Fight off aliens? y/n");
+          if (fightReply === "y" && missionEnvoy.ammo >= 10) {
+            alert("Fought off aliens");
+            missionEnvoy.ammo -= 10;
+            missionEnvoy.food += 3000;
+            missionEnvoy.fuel += 3000;
+            missionEnvoy.materials +=  planetArray[die1].materials;
+          } else {
+            alert("Aliens attacked your crew!");
+            for (let i = 0; i < missionEnvoy.crew.length; i++) {
+              missionEnvoy.crew[i].health -= 30;
+            }
           }
         }
         missionEnvoy.fuel -= planetArray[die1].gravity;

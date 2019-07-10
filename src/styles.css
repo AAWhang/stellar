@@ -11,7 +11,7 @@ body {
 
 .card {
   height:125px;
-  font-size:80px;
+  font-size:30px;
 }
 
 .linebottom {
@@ -20,4 +20,8 @@ body {
 
 .borderright {
   border-right: 3px solid black;
+}
+
+#e0 {
+  height:700px;
 }
