@@ -2,15 +2,15 @@ export class Ship {
 
   constructor(hp,money){
     this.hp = hp;
-    this.fuel = 80000;
+    this.fuel = 100;
     this.fuelcap = 100000;
     this.money = money;
     this.parts = 20;
     this.materials = 0;
-    this.ammo = 1000;
+    this.ammo = 0;
     this.shield = 1000;
     this.crew = [];
-    this.food = 10000;
+    this.food = 100;
     this.foodcap = 20000;
     this.speed = 0;
     this.distance = 0;
@@ -144,19 +144,19 @@ export class SpaceEvents {
 
   spaceStation(ship) {
     alert("spaceStation");
-    ship.money += ship.materials * 100;
+    ship.money += ship.materials * 10;
     ship.materials = 0;
-    let buyFood = parseInt(prompt("How much food"));
-    let buyParts = parseInt(prompt("How much Parts"));
-    let buyFuel = parseInt(prompt("How much fuel"));
-    let buyAmmo = parseInt(prompt("How much Ammo"));
+    let buyFood = parseInt(prompt("How much food $10/ea"));
+    let buyParts = parseInt(prompt("How much Parts $100/ea"));
+    let buyFuel = parseInt(prompt("How much fuel $10/ea"));
+    let buyAmmo = parseInt(prompt("How much Ammo $50/ea"));
     let total = (buyFood * 10) + (buyParts * 100) + (buyFuel * 10) + (buyAmmo * 50);
     while (total > ship.money || ship.foodcap < ship.food + buyFood || ship.fuelCap < ship.fuel + buyFuel || buyFood === undefined || buyParts === undefined) {
         alert("Get serious");
-        buyFood = parseInt(prompt("How much food"));
-        buyParts = parseInt(prompt("How much Parts"));
-        buyFuel = parseInt(prompt("How much fuel"));
-        buyAmmo = parseInt(prompt("How much Ammo"));
+        buyFood = parseInt(prompt("How much food $10/ea"));
+        buyParts = parseInt(prompt("How much Parts $100/ea"));
+        buyFuel = parseInt(prompt("How much fuel $10/ea"));
+        buyAmmo = parseInt(prompt("How much Ammo $50/ea"));
         total = (buyFood * 50) + (buyParts * 100) + (buyFuel * 10) + (buyAmmo * 50);
       }
     let repaircost = 1000 - ship.hp;
@@ -170,6 +170,10 @@ export class SpaceEvents {
       for (let i = 0; i < ship.crew.length; i++) {
         ship.crew[i].health = 300;
       }
+    }
+    let shieldReply = prompt("Fully recharge Shield for $10,000? y/n");
+    if (shieldReply === "y") {
+      ship.shield = 1000;
     }
     ship.fuel += buyFuel;
     ship.parts += buyParts;

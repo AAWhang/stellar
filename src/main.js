@@ -8,7 +8,7 @@ import {Ship,Crew,Planets,SpaceEvents} from "./backend.js";
 
 
 $(function(){
-  let missionEnvoy = new Ship(500,500);
+  let missionEnvoy = new Ship(1000,1000000);
   let spacemonths = 0;
   let spaceyears = 0;
   let planetArray = [];
@@ -59,9 +59,11 @@ $(function(){
      let timer2 = setInterval(logN, 50);
 
            function logN() {
-          missionEnvoy.distance += 50;
-          missionEnvoy.fuel -= 20;
-          missionEnvoy.food -= 5;
+             missionEnvoy.distance += 50;
+             missionEnvoy.fuel -= 20;
+             missionEnvoy.food -= 5;
+          // let die1 = Math.floor(Math.random() * 4);
+          // missionEnvoy.crew[die1].health -= 1;
          $("#c0").html(missionEnvoy.distance);
          $("#e0").html("ship hp: " + missionEnvoy.hp + "<br>");
          $("#e0").append("ship fuel: " + missionEnvoy.fuel + "<br>");
@@ -70,19 +72,24 @@ $(function(){
          $("#e0").append("ship ammo: " + missionEnvoy.ammo + "<br>");
          $("#e0").append("ship shield: " + missionEnvoy.shield + "<br>");
          $("#e0").append("ship materials: " + missionEnvoy.materials + "<br>");
-         $("#e0").append("ship fuel: " + missionEnvoy.fuel + "<br>");
+         $("#e0").append("ship parts: " + missionEnvoy.parts + "<br>");
          for (let i = 0; i < missionEnvoy.crew.length; i++) {
            $("#e0").append("crew" + i + "health: " + missionEnvoy.crew[i].health + "<br>");
          }
 
         spaceHappenings(missionEnvoy.distance);
+        deathCheck();
         gameOverCheck();
+        winCheck();
         }
 
 
 
 
   function spaceHappenings(gamedist) {
+    if (gamedist === 100) {
+      whyGod.spaceStation(missionEnvoy);
+    }
     if (gamedist === 120000) {
       whyGod.spaceStation(missionEnvoy);
     }
@@ -99,6 +106,12 @@ $(function(){
     if (gamedist % 30000 === 0) {
       planetEvents();
     }
+
+    if (gamedist % 70000 === 0) {
+      alert("astroidBelt");
+      missionEnvoy = whyGod.astroidBelt(missionEnvoy);
+    }
+
   }
 
   function randomSpaceEvents(months) {
@@ -197,6 +210,22 @@ $(function(){
       clearInterval(timer2);
     }
   }
+
+  function deathCheck(){
+    for (let i = 0; i < missionEnvoy.crew.length; i++) {
+      if (missionEnvoy.crew[i].health <= 0) {
+        missionEnvoy.crew.splice(i,1);
+      }
+    }
+  }
+
+  function winCheck(){
+      if (missionEnvoy.distance >= 600000) {
+        alert("You are Oregon Space!");
+        clearInterval(timer);
+        clearInterval(timer2);
+      }
+    }
 
   // function shop(ship){
   //   let buyFood = parseInt(prompt("How much food"));
